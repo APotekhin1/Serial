@@ -1,7 +1,8 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         Scanner scanner = new Scanner(System.in);
         String[] products = {"Хлеб", "Яблоки", "Молоко",
                 "Крупа", "Огурцы", "Конфеты"};
@@ -10,7 +11,11 @@ public class Main {
             System.out.println((i + 1) + ". " + products[i] +
                     ", Цена: " + prices[i] + " руб./шт.");
         }
-        int[] sumCountProd = new int[products.length];
+
+        // int[] sumCountProd = new int[products.length];
+        Basket basket = new Basket(products, prices);
+
+
         int productNumber = 0; //номер продукта
         int productCount = 0; //количество продукта
         int sumProducts = 0; //сумма корзины
@@ -25,17 +30,16 @@ public class Main {
             productNumber = Integer.parseInt(parts[0]) - 1;
             productCount = Integer.parseInt(parts[1]);
             sumProducts += productCount * prices[productNumber];
-            sumCountProd[productNumber] += productCount;
+            //sumCountProd[productNumber] += productCount;
             //общее кол-во продукта
+            basket.addToCart(productNumber, productCount);
         }
-        System.out.println("Ваша корзина:");
-        for (int i = 0; i < products.length; i++) {
-            if (sumCountProd[i] != 0) {
-                System.out.println(products[i] + " " + sumCountProd[i] +
-                        " шт. " + prices[i] + " руб./шт. " +
-                        (sumCountProd[i] * prices[i]) + " в сумме");
-            }
-        }
-        System.out.println("Итого: " + sumProducts + " руб.");
+
+        basket.saveTxt(new File("basket.txt"));
+
+        //System.out.println("Итого: " + sumProducts + " руб.");
+        basket.printCart();
+
+
     }
 }
