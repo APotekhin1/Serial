@@ -2,7 +2,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String[] products = {"Хлеб", "Яблоки", "Молоко",
                 "Крупа", "Огурцы", "Конфеты"};
@@ -18,7 +18,7 @@ public class Main {
 
         int productNumber = 0; //номер продукта
         int productCount = 0; //количество продукта
-        int sumProducts = 0; //сумма корзины
+
         while (true) {
             System.out.println("Выберите товар " +
                     "и количество или введите end");
@@ -29,15 +29,12 @@ public class Main {
             String[] parts = input.split(" ");
             productNumber = Integer.parseInt(parts[0]) - 1;
             productCount = Integer.parseInt(parts[1]);
-            sumProducts += productCount * prices[productNumber];
-            //sumCountProd[productNumber] += productCount;
-            //общее кол-во продукта
+
             basket.addToCart(productNumber, productCount);
         }
 
         basket.saveTxt(new File("basket.txt"));
 
-        //System.out.println("Итого: " + sumProducts + " руб.");
         basket.printCart();
 
 

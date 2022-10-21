@@ -27,14 +27,14 @@ public class Basket {
     }
 
     public void printCart() {
-        //System.out.println("Ваша корзина:");
-        //for (int i = 0; i < products.length; i++) {
-        //    if (sumCountProd[i] != 0) {
-        //        System.out.println(products[i] + " " + sumCountProd[i] +
-        //                " шт. " + prices[i] + " руб./шт. " +
-        //                (sumCountProd[i] * prices[i]) + " в сумме");
-        //    }
-        //}
+        System.out.println("Ваша корзина:");
+        for (int i = 0; i < productsName.length; i++) {
+            if (counts[i] != 0) {
+                System.out.println(productsName[i] + " " + counts[i] +
+                        " шт. " + prices[i] + " руб./шт. " +
+                        (counts[i] * prices[i]) + " в сумме");
+            }
+        }
     }
 
     public void saveTxt(File textFile) throws FileNotFoundException {
