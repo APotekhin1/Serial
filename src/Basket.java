@@ -1,11 +1,6 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.*;
 
-public class Basket {
+public class Basket implements Serializable {
     protected String[] productsName;
     protected int[] prices;
     protected int[] counts;
@@ -37,36 +32,15 @@ public class Basket {
         }
     }
 
-    public void saveTxt(File textFile) throws FileNotFoundException {
-        try (PrintWriter out = new PrintWriter(textFile)) {
-            for (String productsName : productsName) {
-                out.print(productsName + " ");
-            }
-            out.println();
-
-            for (int price : prices) {
-                out.print(price + " ");
-            }
-            out.println();
-
-            for (int count : counts) {
-                out.print(count + " ");
-            }
-            out.println();
+    public void saveBin(File binFile) throws IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(binFile))) {
+            out.writeObject(this);
         }
-
     }
 
-    public static Basket loadFromTxtFile(File txtFile) throws FileNotFoundException {
-        try (Scanner scanner = new Scanner(new FileInputStream(txtFile))) {
-            String[] procuctsNames = scanner.nextLine().trim().split(" ");
-            int[] prices = Arrays.stream(scanner.nextLine().trim().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            int[] counts = Arrays.stream(scanner.nextLine().trim().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            return new Basket(procuctsNames, prices, counts);
+    public static Basket loadFromBinFile(File binFile) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(binFile))) {
+            return (Basket) in.readObject();
         }
     }
 }

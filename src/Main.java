@@ -33,7 +33,7 @@ public class Main {
             basket.addToCart(productNumber, productCount);
         }
 
-        basket.saveTxt(new File("basket.txt"));
+        basket.saveBin(new File("basket.bin"));
 
         basket.printCart();
 
