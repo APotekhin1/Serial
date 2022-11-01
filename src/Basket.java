@@ -1,14 +1,12 @@
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Basket {
     protected String[] productsName;
     protected int[] prices;
     protected int[] counts;
+
 
     public Basket(String[] productsName, int[] prices) {
         this.productsName = productsName;
@@ -37,36 +35,15 @@ public class Basket {
         }
     }
 
-    public void saveTxt(File textFile) throws FileNotFoundException {
-        try (PrintWriter out = new PrintWriter(textFile)) {
-            for (String productsName : productsName) {
-                out.print(productsName + " ");
-            }
-            out.println();
+    public void saveJson(File jsonFile) throws IOException {
+        try (PrintWriter out = new PrintWriter(jsonFile)) {
 
-            for (int price : prices) {
-                out.print(price + " ");
-            }
-            out.println();
 
-            for (int count : counts) {
-                out.print(count + " ");
-            }
-            out.println();
+
         }
-
     }
 
-    public static Basket loadFromTxtFile(File txtFile) throws FileNotFoundException {
-        try (Scanner scanner = new Scanner(new FileInputStream(txtFile))) {
-            String[] procuctsNames = scanner.nextLine().trim().split(" ");
-            int[] prices = Arrays.stream(scanner.nextLine().trim().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            int[] counts = Arrays.stream(scanner.nextLine().trim().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            return new Basket(procuctsNames, prices, counts);
-        }
+    public static Basket loadFromJson(File jsonFile) {
+
     }
 }
